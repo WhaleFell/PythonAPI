@@ -67,29 +67,39 @@ def dyVideoUrl(id):
 
 # 只接受get方法访问
 
-def run(url):
-    return_dict = {'http_status': '200'}
-    
-    result = str(getUrl(url))
-    if result == None:
-        return_dict["status"] = "无法提取URL"
-        pass
-    else:
-        # 获取视频id
-        id = getVideoId(url)
-        if id == "0":
-            return_dict["status"] = "视频id获取失败请检查url"
-            print("[DY]视频id获取失败请检查url")
-        else:
-            return_dict["video_id"] = id
-            
-            title, video_url, mp3_url, photo_url = dyVideoUrl(id)
-            return_dict["title"] = title
-            return_dict["video_url"] = video_url
-            return_dict["mp3_url"] = mp3_url
-            return_dict["photo_url"] = photo_url
 
-    return return_dict
+def run(url):
+    return_dict = {'status': '200'}
+    try:
+
+        result = str(getUrl(url))
+        if result == None:
+            return_dict["status"] = "无法提取URL"
+            pass
+        else:
+            # 获取视频id
+            id = getVideoId(url)
+            if id == "0":
+                return_dict["status"] = "视频id获取失败请检查url"
+                print("[DY]视频id获取失败请检查url")
+            else:
+                return_dict["video_id"] = id
+
+                title, video_url, mp3_url, photo_url = dyVideoUrl(id)
+                return_dict["title"] = title
+                return_dict["video_url"] = video_url
+                return_dict["mp3_url"] = mp3_url
+                return_dict["photo_url"] = photo_url
+
+        return return_dict
+    except Exception as e:
+        return_dict = {'status': '500'}
+        return_dict["video_id"] = "0"
+        return_dict["title"] = "发生不可预料的错误!爬!%s" %(e)
+        return_dict["video_url"] = "0"
+        return_dict["mp3_url"] = "0"
+        return_dict["photo_url"] = "0"
+        return return_dict
 
 
 if __name__ == "__main__":
