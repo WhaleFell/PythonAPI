@@ -1,16 +1,14 @@
 '''
-Author: your name
+Author: whalefall
 Date: 2021-02-20 15:02:27
-LastEditTime: 2021-02-20 17:22:33
-LastEditors: Please set LastEditors
-Description: In User Settings Edit
-FilePath: \PythonAPI\main.py
+LastEditTime: 2021-02-20 18:45:46
+Description: 一个基于flask的聚合api(能用就行)
 '''
 import json
 from flask import *
 import threading
 from function import (
-    SkyPic, pzez, dy
+    SkyPic, pzez, dy,xiaojiDict
 )
 
 
@@ -62,6 +60,7 @@ def checkPZEZ():
         return "只接受POST与GET请求"
 
 
+# 抖音去水印
 @app.route("/dy/", methods=["GET", "POST"])
 def dyDelWm():
     if request.method == "GET":
@@ -75,6 +74,19 @@ def dyDelWm():
     else:
         return "只接受POST与GET请求"
 
+# 小鸡词典查词
+@app.route("/xiaoji/", methods=["GET", "POST"])
+def xiaoji():
+    if request.method == "GET":
+        kw = request.args.get("kw")
+        res = xiaojiDict.checkWord(kw)
+        return jsonify(res)
+    elif request.method == "POST":
+        kw = request.form["kw"]
+        res = dy.run(kw)
+        return jsonify(res)
+    else:
+        return "只接受POST与GET请求"
 
 if __name__ == "__main__":
 
