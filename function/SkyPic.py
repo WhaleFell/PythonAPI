@@ -1,35 +1,39 @@
 '''
 Author: whalefall
 Date: 2021-02-17 06:56:41
-LastEditTime: 2021-02-18 18:51:11
-Description: Sky光遇随机图api
+LastEditTime: 2021-02-20 16:51:33
+Description: Sky光遇随机图api(聚合接口版)
 '''
 import csv
-from flask import *
 import json
 import os
-import sys
-import pandas as pd
 import random
+import sys
 from ast import literal_eval  # 将字符串列表转化为列表
+# import collections #有序字典
+
+import pandas as pd
+from flask import *
 
 # 功能函数部分
 # 获取目录下的第一个CSV文件
 
 
 def getCsvPath():
-    result = os.listdir(os.getcwd())
-
+    # 获取脚本所在目录万能方法
+    result = os.listdir(os.path.split(os.path.realpath(__file__))[0])
+    # print(result)
     for csvFileName in result:
         if ".csv" in csvFileName:
-            csv_path = os.path.join(os.getcwd(), csvFileName)
+            csv_path = os.path.join(os.path.split(os.path.realpath(__file__))[0], csvFileName)
             return csv_path
         else:
             pass
 
-    print("[Error]目录下无法找到CSV文件!即将调用 sky.py 生成")
-    os.system("python {}".format(os.path.join(os.getcwd(), "sky.py")))
-    sys.exit()
+    print("[Error]目录下无法找到CSV文件!请手动调用 sky.py 生成")
+    abort(500, "[Error]目录下无法找到CSV文件!请手动调用 sky.py 生成")
+    # os.system("python {}".format(os.path.join(os.getcwd(), "sky.py")))
+    # sys.exit()
 
 # 读取CSV文件
 
@@ -59,13 +63,6 @@ def readCSV(path):
 # readCSV(getCsvPath())
 
 
-# Flask接口部分
-app = Flask(__name__)
-
-# 返回json信息
-
-
-@app.route("/sky/json/", methods=["GET", "POST"])
 def skyJson():
     try:
         try:
@@ -107,12 +104,12 @@ def skyJson():
                 "pic_url": "https://i.loli.net/2021/02/18/w36CqS2FPkdvcV9.jpg",
             }
         }
-    return json.dumps(dictData, ensure_ascii=False)
+    
+    return dictData
 
 # 直接重定向到图片
 
 
-@app.route("/sky/pic/", methods=["GET", "POST"])
 def skyPic():
     try:
         try:
@@ -122,11 +119,11 @@ def skyPic():
             title, text, tags, pic_url, time = readCSV(getCsvPath())
     except Exception as e:
         print("[Error]出现其他异常%s" % e)
-        return redirect("https://i.loli.net/2021/02/18/w36CqS2FPkdvcV9.jpg")
+        return "https://i.loli.net/2021/02/18/w36CqS2FPkdvcV9.jpg"
     else:
-        return redirect(pic_url)
+        return pic_url
 
 
 if __name__ == "__main__":
-
-    app.run(host="0.0.0.0", port=5000, debug=True, threaded=True)
+    print("Json数据:",skyJson())
+    print("图片链接:",skyPic())
