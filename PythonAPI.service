@@ -5,7 +5,7 @@ After=network.target #网络启动后
 [Service]
 Type=simple #运行方式
 WorkingDirectory=/home/pi/PythonAPI #程序运行目录
-ExecStart=gunicorn -c gun.py main:app #具体命令
+ExecStart=python3 -u /usr/bin/gunicorn -c gun.py main:app  #具体命令
 Restart=always    #重启方式不管是什么退出原因，总是重启
 User=root      #执行用户
  

@@ -4,7 +4,8 @@
   > 注意:windowns平台不支持`genvent`
 - 运行:
   ```shell
-  gunicorn -c gun.py main:app # 使用genvent
+  sudo apt-get install gunicorn
+  python3 -u /usr/bin/gunicorn -c gun.py main:app # 使用genvent
   python3 main.py # 使用原生Python
   ```
 - 设置为`systemclt`服务

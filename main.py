@@ -1,12 +1,15 @@
 '''
 Author: whalefall
 Date: 2021-02-20 15:02:27
-LastEditTime: 2021-02-20 18:45:46
+LastEditTime: 2021-02-20 20:38:32
 Description: 一个基于flask的聚合api(能用就行)
 '''
 import json
 from flask import *
 import threading
+# 禁用警告
+import urllib3
+urllib3.disable_warnings()
 from function import (
     SkyPic, pzez, dy,xiaojiDict
 )
