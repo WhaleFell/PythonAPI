@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-02-20 15:02:27
-LastEditTime: 2021-02-20 17:11:02
+LastEditTime: 2021-02-20 17:18:46
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \PythonAPI\main.py
@@ -10,7 +10,7 @@ import json
 from flask import *
 import threading
 from function import (
-    SkyPic, pzez
+    SkyPic, pzez, dy
 )
 
 
@@ -18,11 +18,15 @@ app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False  # 返回中文
 
 # 主页
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     return "<h1 style='text-align:center'>鲸落云API 基于Python Flask</h1><p style='text-align:center'>项目地址:<a href='https://github.com/adminwhalefall/PythonAPI'>https://github.com/adminwhalefall/PythonAPI</a></p1>"
 
 # 光遇随机图
+
+
 @app.route("/sky/<string:ty>/", methods=["GET", "POST"])
 def sky(ty):
     if ty == "json":
@@ -34,6 +38,8 @@ def sky(ty):
         return redirect("/sky/json/")
 
 # pzez查人系统
+
+
 @app.route("/pzez/", methods=["GET", "POST"])
 def checkPZEZ():
     if request.method == "GET":
@@ -52,10 +58,24 @@ def checkPZEZ():
         born_real = request.form["born"]
         res = pzez.run(ty, pyname_real, name_real, born_real)
         return jsonify(res)
+    else:
+        return "只接受POST与GET请求"
+
+
+@app.route("/dy/", methods=["GET", "POST"])
+def dyDelWm():
+    if request.method == "GET":
+        url = request.args.get("url")
+        res = dy.run(url)
+        return jsonify(res)
+    elif request.method == "POST":
+        url = request.form["url"]
+        res = dy.run(url)
+        return jsonify(res)
+    else:
+        return "只接受POST与GET请求"
+
 
 if __name__ == "__main__":
 
     app.run(host="0.0.0.0", port=5000, debug=True, threaded=True)
-
-
-
