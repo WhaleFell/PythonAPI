@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-02-20 19:22:44
-LastEditTime: 2021-02-20 19:46:39
+LastEditTime: 2021-02-20 20:07:22
 LastEditors: Please set LastEditors
 Description: In User Settings Edit
 FilePath: \PythonAPI\gun.py
@@ -13,7 +13,7 @@ gevent.monkey.patch_all()
 import multiprocessing
 
 # 服务地址（adderes:port） 
-bind = 0.0.0.0:5000 
+bind = "0.0.0.0:5000" 
 # 启动进程数量
 workers = multiprocessing.cpu_count() * 2 +1
 worker_class = 'gevent'

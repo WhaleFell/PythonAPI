@@ -20,7 +20,13 @@
 ## .......
 ## .......
 ## .......
-
+## 其他
+- 导出项目依赖
+  > 参考 [https://blog.csdn.net/wzx77/article/details/106898688](https://blog.csdn.net/wzx77/article/details/106898688)
+```shell
+pipreqs --encoding utf8 ./ # 导出
+pip3 install -r requirements.txt # 安装
+```
 
 
 

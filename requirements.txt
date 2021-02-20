@@ -1,0 +1,5 @@
+requests
+pandas
+PyMySQL
+Flask
+gevent
