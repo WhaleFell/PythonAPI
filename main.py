@@ -1,18 +1,18 @@
 '''
 Author: whalefall
 Date: 2021-02-20 15:02:27
-LastEditTime: 2021-02-20 20:38:32
+LastEditTime: 2021-02-20 21:36:08
 Description: 一个基于flask的聚合api(能用就行)
 '''
+from function import (
+    SkyPic, pzez, dy, xiaojiDict
+)
 import json
 from flask import *
 import threading
 # 禁用警告
 import urllib3
 urllib3.disable_warnings()
-from function import (
-    SkyPic, pzez, dy,xiaojiDict
-)
 
 
 app = Flask(__name__)
@@ -32,7 +32,8 @@ def index():
 def sky(ty):
     if ty == "json":
         # return json.dumps(SkyPic.skyJson(), ensure_ascii=False)
-        return jsonify(SkyPic.skyJson())
+        res = SkyPic.skyJson()
+        return jsonify(res)
     elif ty == "pic":
         return redirect(SkyPic.skyPic())
     else:
@@ -78,6 +79,8 @@ def dyDelWm():
         return "只接受POST与GET请求"
 
 # 小鸡词典查词
+
+
 @app.route("/xiaoji/", methods=["GET", "POST"])
 def xiaoji():
     if request.method == "GET":
@@ -90,6 +93,7 @@ def xiaoji():
         return jsonify(res)
     else:
         return "只接受POST与GET请求"
+
 
 if __name__ == "__main__":
 

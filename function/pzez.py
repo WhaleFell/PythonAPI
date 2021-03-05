@@ -45,17 +45,22 @@ def check_pyname(pyname):
         age = data[7]
         star = data[8]
         shuxian = data[9]
-        res = "初二班别:{} 姓名:{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(student, name, sex, idcard, where,
-                                                                                  born, age, star,
-                                                                                  shuxian) + res
+
+        # 增加初三
+        new_class = data[10]
+        new_class_id = data[11]
+        new_class_all = new_class+new_class_id
+        res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
+                                                                                    born, age, star,
+                                                                                    shuxian) + res
         # 加个摘要输出
-        title = "{}{},".format(student, data[1]) + title
+        title = "{}->{}{},".format(student, new_class_all, data[1]) + title
 
     msg = "名字缩写:{} 共找到{}条结果".format(pyname, result_long)
     res = res.strip()  # 处理结尾的垃圾换行符
-    print("[PZEZ]",msg)
-    print("[PZEZ]",res)
-    print("[PZEZ]",title)
+    print("[PZEZ]", msg)
+    print("[PZEZ]", res)
+    print("[PZEZ]", title)
     return title, msg, res
 
 
@@ -94,17 +99,22 @@ def check_name(check_name):
         age = data[7]
         star = data[8]
         shuxian = data[9]
-        res = "初二班别:{} 姓名:{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(student, name, sex, idcard, where,
-                                                                                  born, age, star,
-                                                                                  shuxian) + res
+
+        # 增加初三
+        new_class = data[10]
+        new_class_id = data[11]
+        new_class_all = new_class+new_class_id
+        res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
+                                                                                    born, age, star,
+                                                                                    shuxian) + res
         # 加个摘要输出
-        title = "{}{},".format(student, data[1]) + title
+        title = "{}->{}{},".format(student, new_class_all, data[1]) + title
 
     msg = "名字(支持模糊查询):{} 共找到{}条结果".format(check_name, result_long)
     res = res.strip()  # 处理结尾的垃圾换行符
-    print("[PZEZ]",msg)
-    print("[PZEZ]",res)
-    print("[PZEZ]",title)
+    print("[PZEZ]", msg)
+    print("[PZEZ]", res)
+    print("[PZEZ]", title)
     return title, msg, res
 
 
@@ -141,19 +151,24 @@ def check_born(check_born):
         age = data[7]
         star = data[8]
         shuxian = data[9]
-        res = "初二班别:{} 姓名:{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(student, name, sex, idcard, where,
-                                                                                  born, age, star,
-                                                                                  shuxian) + res
+
+        # 增加初三
+        new_class = data[10]
+        new_class_id = data[11]
+        new_class_all = new_class+new_class_id
+        res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
+                                                                                    born, age, star,
+                                                                                    shuxian) + res
         # 加个摘要输出
-        title = "{} {}\n".format(student + data[1], data[6]) + title
+        title = "{}->{}{},".format(student, new_class_all, data[1]) + title
 
     msg = "生日(格式:X月X日):{} 共找到{}条结果".format(check_born, result_long)
     # 处理结尾的垃圾换行符
     res = res.strip()
     title = title.strip()
-    print("[PZEZ]",msg)
-    print("[PZEZ]",res)
-    print("[PZEZ]",title)
+    print("[PZEZ]", msg)
+    print("[PZEZ]", res)
+    print("[PZEZ]", title)
     return title, msg, res
 
 
