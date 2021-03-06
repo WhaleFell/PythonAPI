@@ -49,7 +49,7 @@ def check_pyname(pyname):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+new_class_id
+        new_class_all = new_class+str(new_class_id)
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
@@ -103,7 +103,7 @@ def check_name(check_name):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+new_class_id
+        new_class_all = new_class+str(new_class_id)
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
@@ -155,7 +155,7 @@ def check_born(check_born):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+new_class_id
+        new_class_all = new_class+str(new_class_id)
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
