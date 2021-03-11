@@ -1,7 +1,16 @@
-from flask import *
+'''
+Author: whalefall
+Date: 2021-02-20 16:53:03
+LastEditTime: 2021-03-12 02:19:47
+Description: 平洲二中查人function文件
+'''
+# from flask import *
 import pymysql
 import json
 import datetime
+import requests
+import random
+import time
 
 # 数据库参数
 host = "192.168.101.4"
@@ -9,8 +18,62 @@ user = "root"
 password = "123456"
 database = "pzez"
 
+# 新增将长内容储存到云笔记本(jishiben.me) 输出内容链接
+
+
+class Jishiben():
+
+    def __init__(self):
+        self.url = "http://jishiben.me/"
+        # 请求头
+        self.header = {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate",
+            "Accept-Language": "zh-CN,zh;q=0.9",
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            # "Content-Length": "57"
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+            "Cookie": "jsbtime=%s" % (str(int(time.time()))),
+            "Host": "jishiben.me",
+            "Origin": "http://jishiben.me",
+            "Pragma": "no-cache",
+            "Referer": "http://jishiben.me/dqfjz",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
+            "X-Requested-With": "XMLHttpRequest",
+        }
+
+    def content(self, content):
+
+        try:
+            # 获取301重定向的链接
+            re_url = requests.get(self.url, headers=self.header, timeout=5).url
+            # print(re_url)
+            # 内容
+            data = {
+                "t": content,
+            }
+            resp = requests.post(
+                url=re_url, data=data, timeout=5).content.decode(encoding="utf8")
+
+            if "更改已保存" in resp:
+                print("[PZEZ]文本储存成功 %s" % (re_url))
+                return re_url
+            else:
+                print("[PZEZ]文本可能储存失败 %s" % (re_url))
+                return re_url
+
+        except Exception as e:
+            print("[PZEZ]文本转存网络错误 %s" % (e))
+            return "[PZEZ]文本转存网络错误 %s" % (e)
+
+
+# test = Jishiben()
+# test.content("我系好sasa")
 
 # 拼音缩写搜索(需要精准查询)
+
+
 def check_pyname(pyname):
     try:
         # 打开数据库连接
@@ -206,10 +269,10 @@ def write_log(check_name, ty):
 # check_born("2月5日")
 
 # 接口部分
-app = Flask(__name__)
+# app = Flask(__name__)
 
 
-@app.route("/pzez/", methods=["GET", "POST"])
+# @app.route("/pzez/", methods=["GET", "POST"])
 def run(ty, pyname_real, name_real, born_real):
     try:
         # 判断为空的情况
@@ -226,18 +289,21 @@ def run(ty, pyname_real, name_real, born_real):
             pass
 
         # 结果集
-        res_json = {"msg": "", "title": "", "result": ""}
+        res_json = {"msg": "", "title": "", "result": "", "result_url": ""}
         res_json["msg"] = msg
         res_json["title"] = title
         res_json["result"] = result
+        res_json["result_url"] = Jishiben().content(result)
         write_log(title, ty)
         # 这是因为json.dumps 序列化时对中文默认使用的ascii编码.想输出真正的中文需要指定ensure_ascii=False：
+        # print(res_json)
         return res_json
+        
     except Exception as e:
         return {"msg": "[eroor]系统出现异常,情检查请求参数:{}".format(str(name_real), str(pyname_real), str(born_real)),
-                "result": "{}".format(e)}
+                "result": "{}".format(e),"result_url": "[Empty]"}
 
 
 # 一定要写上,不然用第三方调用就失败
 if __name__ == "__main__":
-    pass
+    run(None,"hyy",None,None)
