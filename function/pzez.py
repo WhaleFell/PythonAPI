@@ -1,7 +1,7 @@
 '''
 Author: whalefall
 Date: 2021-02-20 16:53:03
-LastEditTime: 2021-03-12 02:19:47
+LastEditTime: 2021-03-12 21:33:37
 Description: 平洲二中查人function文件
 '''
 # from flask import *
@@ -112,7 +112,7 @@ def check_pyname(pyname):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+str(new_class_id)
+        new_class_all = "%s%s" % (new_class, str(new_class_id))
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
@@ -166,7 +166,7 @@ def check_name(check_name):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+str(new_class_id)
+        new_class_all = "%s%s" % (new_class, str(new_class_id))
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
@@ -218,7 +218,7 @@ def check_born(check_born):
         # 增加初三
         new_class = data[10]
         new_class_id = data[11]
-        new_class_all = new_class+str(new_class_id)
+        new_class_all = "%s%s" % (new_class, str(new_class_id))
         res = "姓名:{} 班别:{}->{} 性别:{} 学籍号:{} 地区:{} 生日:{} 年龄:{} 星座:{} 属相:{}\n".format(name, student, new_class_all, sex, idcard, where,
                                                                                     born, age, star,
                                                                                     shuxian) + res
@@ -275,7 +275,7 @@ def write_log(check_name, ty):
 # @app.route("/pzez/", methods=["GET", "POST"])
 def run(ty, pyname_real, name_real, born_real):
     try:
-        # 判断为空的情况
+    # 判断为空的情况
         if pyname_real is not None:
             print(pyname_real)
             title, msg, result = check_pyname(pyname_real)  # 以拼音查询
@@ -298,7 +298,7 @@ def run(ty, pyname_real, name_real, born_real):
         # 这是因为json.dumps 序列化时对中文默认使用的ascii编码.想输出真正的中文需要指定ensure_ascii=False：
         # print(res_json)
         return res_json
-        
+
     except Exception as e:
         return {"msg": "[eroor]系统出现异常,情检查请求参数:{}".format(str(name_real), str(pyname_real), str(born_real)),
                 "result": "{}".format(e),"result_url": "[Empty]"}
@@ -306,4 +306,4 @@ def run(ty, pyname_real, name_real, born_real):
 
 # 一定要写上,不然用第三方调用就失败
 if __name__ == "__main__":
-    run(None,"hyy",None,None)
+    run(None, "hyy", None, None)
