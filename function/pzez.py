@@ -1,7 +1,7 @@
 '''
 Author: whalefall
 Date: 2021-02-20 16:53:03
-LastEditTime: 2021-03-12 21:33:37
+LastEditTime: 2021-03-13 23:00:20
 Description: 平洲二中查人function文件
 '''
 # from flask import *
@@ -62,10 +62,16 @@ class Jishiben():
             else:
                 print("[PZEZ]文本可能储存失败 %s" % (re_url))
                 return re_url
+            
 
         except Exception as e:
             print("[PZEZ]文本转存网络错误 %s" % (e))
             return "[PZEZ]文本转存网络错误 %s" % (e)
+        
+        finally:
+            # 关闭链接
+            resp.close()
+            
 
 
 # test = Jishiben()
